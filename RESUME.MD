@@ -11,10 +11,10 @@ Le provisionement du syteme doit avoir au minimun ses paquets d'installer: git, 
 
 2. Depuis votre machine local (Host):
 a.	Création d'un dossier qui va contenir mon vagrantfile
-PS C:\PROJETS\repo\student-list>
-mkdir C:\PROJETS\repo\student-list\dockerm\
+PS C:\Users\a883206\
+mkdir C:C:\Users\a883206\student-list-christ-bagamboula\dockerm
 b.	Initialisation d'un vagrantfile (option -m = configuration minimum)
-PS C:\PROJETS\repo\student-list\dockerm>
+PS C:C:\Users\a883206\student-list-christ-bagamboula
 vagrant init -m
 
 3.Copier/Coller ce vagrantfile
@@ -99,3 +99,5 @@ Vagrant.configure('2') do |config|
     end
   end
 end
+
+
