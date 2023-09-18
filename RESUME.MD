@@ -139,7 +139,7 @@ ip a
 
 . RECUPERATION DU CODE
 
-5) Récuperation du code git 
+#5) Récuperation du code git 
 
 Depuis dockerm(Host) copier le code de l' API a la racine "/"
 cd /
