@@ -12,9 +12,9 @@ Le provisionement du syteme doit avoir au minimun ses paquets d'installer: git, 
 2. Depuis votre machine local (Host):
 a.	Création d'un dossier qui va contenir mon vagrantfile
 PS C:\Users\a883206\
-mkdir C:C:\Users\a883206\student-list-christ-bagamboula\dockerm
+mkdir C:\Users\a883206\student-list-christ-bagamboula\dockerm
 b.	Initialisation d'un vagrantfile (option -m = configuration minimum)
-PS C:C:\Users\a883206\student-list-christ-bagamboula
+PS C:\Users\a883206\student-list-christ-bagamboula
 vagrant init -m
 
 3.Copier/Coller ce vagrantfile
@@ -99,5 +99,43 @@ Vagrant.configure('2') do |config|
     end
   end
 end
+
+4. Installation des plugins vagrant
+
+PS C:\Users\a883206\student-list-christ-bagamboula\dockerm
+vagrant plugin install vagrant-winnfsd
+PS C:\Users\a883206\student-list-christ-bagamboula\dockerm
+vagrant plugin install vagrant-vbguest
+PS C:\Users\a883206\student-list-christ-bagamboula\dockerm
+vagrant plugin install vagrant-share
+Verification de son vagrantfile
+PS C:\Users\a883206\student-list-christ-bagamboula\dockerm
+Output:
+
+vagrant validate
+Vagrantfile validated successfully.
+Creation de la machine virtuelle "mpdocker"
+PS C:\Users\a883206\student-list-christ-bagamboula\dockerm
+vagrant up
+Connexion en ssh depuis votre prompt
+PS C:\Users\a883206\student-list-christ-bagamboula\dockerm
+vagrant ssh dockerm
+Verification apres installation
+cat /etc/redhat-release
+CentOS Linux release 7.6.1810 (Core)
+docker -v
+Docker version 20.10.10, build b485636
+docker-compose -v
+docker-compose version 1.29.2, build 5becea4c
+ip a
+...
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:24:c7:d8 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.200/24 brd 10.0.0.255 scope global noprefixroute eth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::a00:27ff:fe24:c7d8/64 scope link
+       valid_lft forever preferred_lft forever
+...
+
 
 
