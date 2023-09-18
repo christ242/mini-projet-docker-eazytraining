@@ -214,6 +214,17 @@ Lien pour encoder ou decoder un mot de passe: Encode-Decode Base64
 
 $url = 'http://<api_ip_or_name:port>/pozos/api/v1.0/get_student_ages';
 par
-$url = 'http://api:5000/pozos/api/v1.0/get_student_ages';
+$url = 'http://10.0.0.10:80/pozos/api/v1.0/get_student_ages';
 Enregistrer les modifications part 1 ;)
+
+Test de l'API
+
+[vagrant@mpdocker website]$ sudo curl -u toto:python -X GET http://10.0.0.10:80/pozos/api/v1.0/get_student_ages
+{
+  "student_ages": {
+    "alice": "12", 
+    "bob": "13"    
+  }
+}
+[vagrant@mpdocker website]$ 
 
