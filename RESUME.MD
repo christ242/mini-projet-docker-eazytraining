@@ -26,14 +26,14 @@ RAM = 2048
 CPU = 2
 IP = "10.0.0.10"
 
-# Check Vagrant plugins
-# If you want to ensure that vagrant-winnfsd is installed and enabled every time you run your vagrant box, just add the following to your vagrant file, just before the code block
+\# Check Vagrant plugins
+\# If you want to ensure that vagrant-winnfsd is installed and enabled every time you run your vagrant box, just add the following to your vagrant file, just before the code block
 if Vagrant::Util::Platform.windows? then
   unless Vagrant.has_plugin?("vagrant-winnfsd")
     raise  Vagrant::Errors::VagrantError.new, "vagrant-winnfsd plugin is missing. Please install it using 'vagrant plugin install vagrant-winnfsd' and rerun 'vagrant up'"
   end
 end
-# If you want to ensure that vagrant-vbguest is installed and enabled every time you run your vagrant box, just add the following to your vagrant file, just before the code block
+\# If you want to ensure that vagrant-vbguest is installed and enabled every time you run your vagrant box, just add the following to your vagrant file, just before the code block
 if Vagrant::Util::Platform.windows? then
   unless Vagrant.has_plugin?("vagrant-vbguest")
     raise  Vagrant::Errors::VagrantError.new, "vagrant-vbguest plugin is missing. Please install it using 'vagrant plugin install vagrant-vbguest' and rerun 'vagrant up'"
@@ -156,7 +156,7 @@ drwxr-xr-x.  8 root root  163 Nov 11 13:52 .git
 drwxr-xr-x.  2 root root   70 Nov 11 13:52 simple_api
 drwxr-xr-x.  2 root root   23 Nov 11 13:52 website
 
-.CREATION DU DOCKERFILE
+.BUILD AND RUN DE L'IMAGE 
 
 Edition du Dockerfile
 sudo vi /student-list/simple_api-christ-bagamboula/Dockerfile
@@ -191,6 +191,29 @@ api          latest    ac4f4a96ce04   About an hour ago   1.14GB
  [vagrant@mpdocker simple_api]$ sudo docker images
 REPOSITORY   TAG       IMAGE ID       CREATED             SIZE  
 api          latest    ac4f4a96ce04   About an hour ago   1.14GB
-[vagrant@mpdocker simple_api]$ sudo docker container run -d -p 80:5000 --name api-test -v /home/vagrant/student-list-christ-bagamboula/simple_api/student_age.json:/data/student_age.json  api
+sudo docker container run -d -p 80:5000 --name api-test -v /home/vagrant/student-list-christ-bagamboula/simple_api/student_age.json:/data/student_age.json  api
 
+[vagrant@mpdocker simple_api]$ sudo docker volume ls  ( Affichage du volume docker local crée)
+DRIVER    VOLUME NAME
+local     1e0fd7a2cfc6c735578bd2f3040f6005a6f5aee37fa67206f7fb23f1b9a08873
+[vagrant@mpdocker simple_api]$ 
+. Mise à jour du fichier index.php
+
+Edition de la page index.php
+sudo vi /student-list/website/index.php
+Modifer les lignes suivantes
+  $username = getenv('USERNAME');
+  $password = getenv('PASSWORD');
+  if ( empty($username) $username = 'Y29kYWMtcm8=';
+  if ( empty($password) $password = 'IUMwZEBjUjA=';
+  $context = stream_context_create(array(
+    "http" => array(
+    "header" => "Authorization: Basic " . base64_decode("$username:$password"),
+  )));
+Lien pour encoder ou decoder un mot de passe: Encode-Decode Base64
+
+$url = 'http://<api_ip_or_name:port>/pozos/api/v1.0/get_student_ages';
+par
+$url = 'http://api:5000/pozos/api/v1.0/get_student_ages';
+Enregistrer les modifications part 1 ;)
 
