@@ -1,0 +1,27 @@
+version: '3.3'
+services:
+    api:
+        image: api
+        build: '/home/vagrant/student-list-christ-bagamboula/simple_api/'
+        container_name: api-test
+        network_mode: study-net
+        ports:
+            - '5000:5000'
+        env_file:
+            - env_prod
+        volumes:
+            - '/home/vagrant/student-list-christ-bagamboula/simple_api/student_age.json:/data/student_age.json'
+    web:
+        container_name: web-api
+        network_mode: study-net
+        ports:
+            - '8080:80'
+        env_file:
+            - env_prod
+        volumes:
+            - '/website:/var/www/html/'
+        image: 'php:apache'
+        depends_on:
+            - 'api'
+networks:
+    study-net:
