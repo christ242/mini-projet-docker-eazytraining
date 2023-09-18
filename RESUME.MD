@@ -1,4 +1,4 @@
-1. Création de la machine virtuelle 
+#1. Création de la machine virtuelle 
 Notre machine virtuelle se nommera "dockerm" elle sera le host qui permettra de faire fonctionner nos conteneurs.
 Prerequis:
 Une machine local sous Linux, Windows, MacOS
@@ -137,7 +137,24 @@ ip a
        valid_lft forever preferred_lft forever
 ...
 
+. RECUPERATION DU CODE
 
+5) Récuperation du code git 
 
+Depuis dockerm(Host) copier le code de l' API a la racine "/"
+cd /
+sudo git clone https://github.com/diranetafen/student-list.git
+Verification de l'emplacement du code
+ls -alh /student-list/
+Output:
+
+total 48K
+drwxr-xr-x.  8 root root  193 Nov 11 13:52 .
+dr-xr-xr-x. 19 root root  259 Nov 11 13:52 ..
+-rw-r--r--.  1 root root  800 Nov 11 13:52 docker-compose.yml
+drwxr-xr-x.  8 root root  163 Nov 11 13:52 .git
+-rw-r--r--.  1 root root 7.1K Nov 11 13:52 README.md
+drwxr-xr-x.  2 root root   70 Nov 11 13:52 simple_api
+drwxr-xr-x.  2 root root   23 Nov 11 13:52 website
 
 
