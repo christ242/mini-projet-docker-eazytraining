@@ -9,7 +9,7 @@ Avoir un editeur de texte (Notepad++, VSCode)
 Creation d'une virtual machine avec un OS:Centos 7.6 depuis un vagrantfile
 Le provisionement du syteme doit avoir au minimun ses paquets d'installer: git, docker, docker-compose
 
-2. Depuis votre machine local (Host):
+# 2. Depuis votre machine local (Host):
 a.	Création d'un dossier qui va contenir mon vagrantfile
 PS C:\Users\a883206\
 mkdir C:\Users\a883206\student-list-christ-bagamboula\dockerm
@@ -17,10 +17,10 @@ b.	Initialisation d'un vagrantfile (option -m = configuration minimum)
 PS C:\Users\a883206\student-list-christ-bagamboula
 vagrant init -m
 
-3.Copier/Coller ce vagrantfile
+# 3.Copier/Coller ce vagrantfile
 
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
+/# -*- mode: ruby -*-
+/# vi: set ft=ruby :
 
 RAM = 2048
 CPU = 2
