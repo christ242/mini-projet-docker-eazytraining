@@ -26,26 +26,26 @@ RAM = 2048
 CPU = 2
 IP = "10.0.0.10"
 
-\# Check Vagrant plugins
-\# If you want to ensure that vagrant-winnfsd is installed and enabled every time you run your vagrant box, just add the following to your vagrant file, just before the code block
+/# Check Vagrant plugins
+/# If you want to ensure that vagrant-winnfsd is installed and enabled every time you run your vagrant box, just add the following to your vagrant file, just before the code block
 if Vagrant::Util::Platform.windows? then
   unless Vagrant.has_plugin?("vagrant-winnfsd")
     raise  Vagrant::Errors::VagrantError.new, "vagrant-winnfsd plugin is missing. Please install it using 'vagrant plugin install vagrant-winnfsd' and rerun 'vagrant up'"
   end
 end
-\# If you want to ensure that vagrant-vbguest is installed and enabled every time you run your vagrant box, just add the following to your vagrant file, just before the code block
+/# If you want to ensure that vagrant-vbguest is installed and enabled every time you run your vagrant box, just add the following to your vagrant file, just before the code block
 if Vagrant::Util::Platform.windows? then
   unless Vagrant.has_plugin?("vagrant-vbguest")
     raise  Vagrant::Errors::VagrantError.new, "vagrant-vbguest plugin is missing. Please install it using 'vagrant plugin install vagrant-vbguest' and rerun 'vagrant up'"
   end
 end
-# If you want to ensure that vagrant-share is installed and enabled every time you run your vagrant box, just add the following to your vagrant file, just before the code block
+/# If you want to ensure that vagrant-share is installed and enabled every time you run your vagrant box, just add the following to your vagrant file, just before the code block
 if Vagrant::Util::Platform.windows? then
   unless Vagrant.has_plugin?("vagrant-share")
     raise  Vagrant::Errors::VagrantError.new, "vagrant-share plugin is missing. Please install it using 'vagrant plugin install vagrant-share' and rerun 'vagrant up'"
   end
 end
-# SCRIPT for provisioning the magic system :)
+/# SCRIPT for provisioning the magic system :)
 $no_update_system = <<SCRIPT
 echo Stop Update System...
 sudo systemctl stop packagekit.service && sudo systemctl disable packagekit.service
@@ -81,7 +81,7 @@ echo "The Virtual machine Centos 7.6 has been installed >>> Last reboot !!!"
 sudo reboot
 SCRIPT
 
-# The vagrant config for virtual machine named dockerm
+/# The vagrant config for virtual machine named dockerm
 Vagrant.configure('2') do |config|
   config.vm.define :dockerm, primary: true  do |dockerm|
     dockerm.vm.box = "komlevv/centos-7.6"
@@ -137,7 +137,7 @@ ip a
        valid_lft forever preferred_lft forever
 ...
 
-. RECUPERATION DU CODE GIT
+#  RECUPERATION DU CODE GIT
 
 
 Depuis dockerm(Host) copier le code de l' API a la racine "/"
