@@ -1,4 +1,4 @@
-#1. Création de la machine virtuelle 
+1#. Création de la machine virtuelle 
 Notre machine virtuelle se nommera "dockerm" elle sera le host qui permettra de faire fonctionner nos conteneurs.
 Prerequis:
 Une machine local sous Linux, Windows, MacOS
