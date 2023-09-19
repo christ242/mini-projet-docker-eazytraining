@@ -100,7 +100,7 @@ Vagrant.configure('2') do |config|
   end
 end
 
-4. Installation des plugins vagrant
+# 4. Installation des plugins vagrant
 
 PS C:\Users\a883206\student-list-christ-bagamboula\dockerm
 vagrant plugin install vagrant-winnfsd
