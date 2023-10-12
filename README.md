@@ -277,15 +277,13 @@ We need to update the index file before carrying out the build of the image beca
 [vagrant@mpdocker student-list]$ cat ./website/index.php
 
 ![image](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/3d9c67e5-7215-41f4-89b8-4af9056e6a6f)
-![alt text] (https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/3d9c67e5-7215-41f4-89b8-4af9056e6a6f)
+![alt text](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/3d9c67e5-7215-41f4-89b8-4af9056e6a6f)
 
 ```
 ```
-SOME_USERNAME=toto
-SOME_PWD_VAR=python
-```
-2. Enregistrer les modifications ;)
 ##
+## Creating a bridge Network
+
 
 
 ## Infrastructure As Code (5 points)
