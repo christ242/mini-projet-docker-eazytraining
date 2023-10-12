@@ -1,5 +1,5 @@
 ## MINI-PROJET-DOCKER-FROM-EASYTRAINING :
-This mini project of docker was carried during my participation of a bootcamp from Eazytraining in order to demonstrate my ability to manage a docker infrastructure . The information about the project can ve found here https://github.com/diranetafen/student-list
+This mini project of docker was carried during my participation of a bootcamp from Eazytraining in order to demonstrate my ability to manage a docker infrastructure . The information about the project can ve found here [https://github.com/diranetafen/student-list](https://github.com/diranetafen/student-list)
 
 # student-list 
 This repo is a simple application to list student with a webserver (PHP) and API (Flask)
