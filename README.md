@@ -276,13 +276,14 @@ We need to update the index file before carrying out the build of the image beca
 [vagrant@mpdocker student-list]$ sudo sed -i 's/<api_ip_or_name:port>/student-list-api:5000/g' ./website/index.php
 [vagrant@mpdocker student-list]$ cat ./website/index.php
 
-![image](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/3d9c67e5-7215-41f4-89b8-4af9056e6a6f)
 ![alt text](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/3d9c67e5-7215-41f4-89b8-4af9056e6a6f)
 
 ```
-```
-##
-## Creating a bridge Network
+#
+## Creating Bridge Network 
+1.  Updating Index File
+
+
 
 
 
