@@ -281,7 +281,35 @@ We need to update the index file before carrying out the build of the image beca
 ```
 #
 ## Creating Bridge Network 
-1.  Updating Index File
+[vagrant@mpdocker student-list]$ sudo docker network create --driver=bridge student-list-network
+e4ab897bdc88d361b0d547fb29e171ca50ccf39babab9580d6c2c4845289aab7
+[vagrant@mpdocker student-list]$ sudo docker network ls
+NETWORK ID     NAME                   DRIVER    SCOPE
+ad96ba2f34a1   bridge                 bridge    local
+6a90b08eee20   host                   host      local
+0f49e3367c81   none                   null      local
+e4ab897bdc88   student-list-network   bridge    local
+[vagrant@mpdocker student-list]$ 
+
+#
+## Building and Running Image
+1. Creating the image for the api's container
+```bash
+cd /student-list/simple_api/
+```
+```bash
+sudo docker build -t student-list_api:v1.0 .
+```
+2. Verification de l'image
+```bash
+sudo docker images
+```
+```bash
+REPOSITORY         TAG           IMAGE ID       CREATED         SIZE
+student-list_api   v1.0          4c056fe48362   6 seconds ago   1.13GB
+python             2.7-stretch   e71fc5c0fcb1   18 months ago   928MB
+```
+
 
 
 
