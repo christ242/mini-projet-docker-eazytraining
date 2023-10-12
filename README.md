@@ -218,56 +218,73 @@ ip a
 
 ...
 ```
+## Retrieving the code from Git
+1. From mpdocker (Host) we gitclone the code from the root like this "/"
+```bash
+cd /
+```
+```bash
+sudo git clone https://github.com/diranetafen/student-list.git
+```
+2. Checking code location
+```bash
+ls -alh /student-list/
+```
+Output:
+```bash
+[vagrant@mpdocker ~]$ ls -alh student-list/
+total 8.0K
+drwxr-xr-x. 5 root    root      94 Oct 12 10:38 .
+drwx------. 4 vagrant vagrant   94 Oct 12 10:38 ..
+-rw-r--r--. 1 root    root       0 Oct 12 10:38 docker-compose.yml
+drwxr-xr-x. 8 root    root     163 Oct 12 10:38 .git
+-rw-r--r--. 1 root    root    7.0K Oct 12 10:38 README.md
+drwxr-xr-x. 2 root    root      70 Oct 12 10:38 simple_api        
+drwxr-xr-x. 2 root    root      23 Oct 12 10:38 website
+[vagrant@mpdocker ~]$
+```
+#
+
+## Creating the Dockerfile 
+We are going to create the Dockerfile according to the information given by POZOS in order to buy the API container , see the source code [https://github.com/diranetafen/student-list](https://github.com/diranetafen/student-list)
+1. Edition of Dockerfile
+```bash
+sudo vi /student-list/simple_api/Dockerfile
+```
+NB: La touche I c'est la vie ! :)
+```bash
+FROM python:2.7-stretch
+LABEL maintainer=Christ-Bagamboula mail=bagam_fleury@hotmail.fr  
+# Dependencies for the system
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -y && apt-get install python-dev python3-dev libsasl2-dev python-dev libldap2-dev libssl-dev -y
+# Installation Flask
+RUN pip install flask==1.1.2 flask_httpauth==4.1.0 flask_simpleldap python-dotenv==0.14.0
+# Configure network for API
+EXPOSE 5000
+# Configuration volume /data
+VOLUME [ "/data" ]
+# Copy the script student_age.py to /
+COPY student_age.py /
+# Run the server python and start api
+CMD [ "python", "./student_age.py" ]
+```
 ##
-### Retrieving the code from Git
+## Updating Index File 
+1.  Updating Index File
+```bash
+We need to update the index file before carrying out the build of the image because we need to update the api name and port in order to fit the deployment  . This is line which should be update : $url = 'http://<api_ip_or_name:port>/pozos/api/v1.0/get_student_ages';
+[vagrant@mpdocker student-list]$ sudo sed -i 's/<api_ip_or_name:port>/student-list-api:5000/g' ./website/index.php
+[vagrant@mpdocker student-list]$ cat ./website/index.php
+![image](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/66e0dca9-3020-466d-9cfa-a447ec53c92e)
 
-
-## Build and test (7 points)
-
-POZOS will give you information to build the API container
-
-- Base image
-
-To build API image you must use "python:2.7-buster"
-
-- Maintainer
-
-Please don't forget to specify the maintainer information
-
-- Add the source code
-
-You need to copy the source code of the API in the container at the root "/" path
-
-- Prerequisite
-
-The API is using FLASK engine,  here is a list of the package you need to install
 ```
-apt update -y && apt install python-dev python3-dev libsasl2-dev python-dev libldap2-dev libssl-dev -y
-pip install flask==1.1.2 flask_httpauth==4.1.0 flask_simpleldap python-dotenv==0.14.0
 ```
-- Persistent data (volume)
+SOME_USERNAME=toto
+SOME_PWD_VAR=python
+```
+2. Enregistrer les modifications ;)
+##
 
-Create data folder at the root "/" where data will be stored and declare it as a volume
-
-You will use this folder to mount student list
-
-- API Port
-
-To interact with this API expose 5000 port
-
-- CMD
-
-When container start, it must run the student_age.py (copied at step 4), so it should be something like
-
-`CMD [ "python", "./student_age.py" ]`
-
-Build your image and try to run it (don't forget to mount *student_age.json* file at */data/student_age.json* in the container), check logs and verify that the container is listening and is  ready to answer
-
-Run this command to make sure that the API correctly responding (take a screenshot for delivery purpose)
-
-`curl -u toto:python -X GET http://<host IP>:<API exposed port>/pozos/api/v1.0/get_student_ages`
-
-**Congratulation! Now you are ready for the next step (docker-compose.yml)**
 
 ## Infrastructure As Code (5 points)
 
