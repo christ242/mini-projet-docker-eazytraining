@@ -270,10 +270,9 @@ CMD [ "python", "./student_age.py" ]
 ```
 ##
 ## Updating Index File 
-1.  Updating Index File
 ```bash
 We need to update the index file before carrying out the build of the image because we need to update the api name and port in order to fit the deployment  . This is line which should be update : $url = 'http://<api_ip_or_name:port>/pozos/api/v1.0/get_student_ages';
-[vagrant@mpdocker student-list]$ sudo sed -i 's/<api_ip_or_name:port>/student-list-api:5000/g' ./website/index.php
+[vagrant@mpdocker student-list]$ sudo sed -i 's/<api_ip_or_name:port>/10.0.0.10:5000/g' ./website/index.php
 [vagrant@mpdocker student-list]$ cat ./website/index.php
 
 ![alt text](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/3d9c67e5-7215-41f4-89b8-4af9056e6a6f)
@@ -292,13 +291,50 @@ e4ab897bdc88   student-list-network   bridge    local
 [vagrant@mpdocker student-list]$ 
 
 #
-## Building and Running Image
+## Creating volume data
+1. Creation of a persistent volume named data 
+```bash
+sudo docker volume create data
+```
+2. Listing of volumes
+```bash
+sudo docker volume ls
+```
+```bash
+[vagrant@mpdocker simple_api]$ sudo docker volume ls
+DRIVER    VOLUME NAME
+local     5d3ad99dfec9d182c3f5b6e640a9c4b06df6c3ad8aa3579fe157cd209fbc40d2
+local     8cfa6dd6a804c758196718e83f3316468ae149a3e1dc469524296f3213ef235b
+local     ba39f8a3c18e3f30eb397b0f8d1e3a1d12c729ddd5bb132654bad628047cc0b7
+local     data
+local     fb00c3d893ac0231436683e867d732478253423c107e38edca5bae3c6a5e39ce
+
+```  
+3. Detail du volume data
+```bash
+sudo docker volume inspect data
+```
+Output :
+```bash
+[
+    {
+        "CreatedAt": "2023-10-12T14:48:30Z",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/data/_data",
+        "Name": "data",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+```
+## Building Image
 1. Creating the image for the api's container
 ```bash
 cd /student-list/simple_api/
 ```
 ```bash
-sudo docker build -t student-list_api:v1.0 .
+sudo docker build -t student-list-api:v1.0 .
 ```
 2. Verification de l'image
 ```bash
@@ -306,16 +342,69 @@ sudo docker images
 ```
 ```bash
 REPOSITORY         TAG           IMAGE ID       CREATED         SIZE
-student-list_api   v1.0          4c056fe48362   6 seconds ago   1.13GB
-python             2.7-stretch   e71fc5c0fcb1   18 months ago   928MB
+[vagrant@mpdocker simple_api]$ sudo docker images
+REPOSITORY         TAG       IMAGE ID       CREATED          SIZE  
+student-list-api   latest    b70c5c94bc46   31 seconds ago   1.14GB
 ```
+## Running Image 
+1. Setting up the apicontainer
+[vagrant@mpdocker simple_api]$ sudo docker container run -d -it -p 5000:5000 --name student-list-container -v /home/vagrant/student-list/simple_api/student_age.json:/data/student_age.json student-list-api
+bef2cb5cbe2b20d34d31cd2282f5a3f63892120b0f401318e8fc98e88301e8f7
+2. Checking out the container 
+[vagrant@mpdocker simple_api]$ sudo docker ps
+CONTAINER ID   IMAGE              COMMAND                  CREATED         STATUS         PORTS                                       NAMES
+bef2cb5cbe2b   student-list-api   "python ./student_ag…"   6 seconds ago   Up 4 seconds   0.0.0.0:5000->5000/tcp, :::5000->5000/tcp   student-list-container
+3. API Test
+
+[vagrant@mpdocker simple_api]$ curl -u toto:python -X GET http://10.0.0.10:5000/pozos/api/v1.0/get_student_ages
+{
+  "student_ages": {
+    "alice": "12", 
+    "bob": "13"    
+  }
+}
+
+##  Tagging the image's application
+[vagrant@mpdocker simple_api]$ sudo docker images
+REPOSITORY         TAG       IMAGE ID       CREATED          SIZE  
+student-list-api   latest    b70c5c94bc46   59 minutes ago   1.14GB 
+[vagrant@mpdocker simple_api]$ sudo docker tag b70c5c94bc46 kitepoye/student-list-api:v1.0
+[vagrant@mpdocker simple_api]$ sudo docker images
+REPOSITORY                  TAG       IMAGE ID       CREATED             SIZE  
+kitepoye/student-list-api   v1.0      b70c5c94bc46   About an hour ago   1.14GB
+student-list-api            latest    b70c5c94bc46   About an hour ago   1.14GB
+
+## Sending the image's application to dockerhub
+[vagrant@mpdocker simple_api]$ sudo docker login
+Log in with your Docker ID or email address to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com/ to create one.
+You can log in with your password or a Personal Access Token (PAT). Using a limited-scope PAT grants better security and is required for organizations using SSO. Learn more at https://docs.docker.com/go/access-tokens/
+
+Username: kitepoye
+Password: 
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store  
+
+Login Succeeded
+[vagrant@mpdocker simple_api]$ sudo docker push kitepoye/student-list-api:v1.0
+The push refers to repository [docker.io/kitepoye/student-list-api]
+b990a64775c6: Pushed
+4ae6f9decede: Pushed
+1c97bd8b5dec: Pushed
+e571d2d3c73c: Mounted from library/python
+da7b0a80a4f2: Mounted from library/python
+ceee8816bb96: Mounted from library/python
+47458fb45d99: Mounted from library/python
+46829331b1e4: Mounted from library/python
+d35c5bda4793: Mounted from library/python
+a3c1026c6bcc: Mounted from library/python
+f1d420c2af1a: Mounted from library/python
+461719022993: Mounted from library/python
+v1.0: digest: sha256:e2ee9b930beb19089f39bb6f2b698b293af7f0154ba375f19a0f0c9d93be485d size: 2852
+[vagrant@mpdocker simple_api]$ 
 
 
-
-
-
-
-## Infrastructure As Code (5 points)
+### Infrastructure As Code (5 points)
 
 After testing your API image, you need to put all together and deploy it, using docker-compose.
 
