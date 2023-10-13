@@ -418,9 +418,9 @@ v1.0: digest: sha256:e2ee9b930beb19089f39bb6f2b698b293af7f0154ba375f19a0f0c9d93b
 ```bash
 ````
 
-### Infrastructure As Code (5 points)
+### Infrastructure As Code 
 
-After testing your API image, you need to put all together and deploy it, using docker-compose.
+After testing my  API image, I will put all together and deploy it, using docker-compose.
 
 The ***docker-compose.yml*** file will deploy two services :
 
@@ -435,8 +435,20 @@ The ***docker-compose.yml*** file will deploy two services :
    - image: the name of the image builded previously
    - volumes: You will mount student_age.json file in /data/student_age.json
    - port: don't forget to expose the port
+ 
+### Building and Running via Dockercompose
+```bash
+1. Edition du docker-compose
+```bash
+cd ..
+```
+```bash
+sudo vi docker-compose.yml
+```
+```bash
 
-Delete your previous created container
+
+
 
 Run your docker-compose.yml
 
