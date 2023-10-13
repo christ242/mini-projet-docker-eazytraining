@@ -500,13 +500,7 @@ ihm_api   docker-php-entrypoint apac ...   Up      0.0.0.0:8080->80/tcp,:::8080-
 ![alt text](![image](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/35446697-ed79-4a1e-a166-021e9d871f7f)
 
 
-Run your docker-compose.yml
-
-Finally, reach your website and click on the bouton "List Student"
-
-**If the list of the student appears, you are successfully dockerizing the POZOS application! Congratulation (make a screenshot)**
-
-## Docker Registry (4 points)
+##  Private Docker Registry (4 points)
 
 POZOS need you to deploy a private registry and store the built images
 
