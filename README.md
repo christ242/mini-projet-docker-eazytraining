@@ -468,7 +468,7 @@ services:
         volumes:
             - '/website:/var/www/html/'
         depends_on:
-            - 'student-list-api'
+            - 'api'
 
     registry:
         ports:
@@ -505,9 +505,16 @@ networks:
 sudo docker-compose up -d
 ```
 ```bash
-Creating student-list_api_1 ... done
-Creating student-list_web_1 ... done
+3. Verify the resources created
+``` bash
+vagrant@mpdocker student-list]$ sudo docker ps
+CONTAINER ID   IMAGE                           COMMAND                  CREATED         STATUS         PORTS                                       NAMES   
+27c8c79153b8   joxit/docker-registry-ui:main   "/docker-entrypoint.…"   5 minutes ago   Up 4 seconds   0.0.0.0:80->80/tcp, :::80->80/tcp           registry-ui
+ddd28dfb002a   php:apache                      "docker-php-entrypoi…"   5 minutes ago   Up 4 seconds   0.0.0.0:8080->80/tcp, :::8080->80/tcp       web-api 
+209c046db6cf   student-list-api:v1.0           "python ./student_ag…"   5 minutes ago   Up 5 seconds   0.0.0.0:8500->5000/tcp, :::8500->5000/tcp   api-test1a33b4090b6b   registry:2                      "/entrypoint.sh /etc…"   5 minutes ago   Up 5 seconds   0.0.0.0:5000->5000/tcp, :::5000->5000/tcp   registry
+``` bash
 ```
+
 
 
 
