@@ -274,10 +274,11 @@ CMD [ "python", "./student_age.py" ]
 We need to update the index file before carrying out the build of the image because we need to update the api name and port in order to fit the deployment  . This is line which should be update : $url = 'http://<api_ip_or_name:port>/pozos/api/v1.0/get_student_ages';
 [vagrant@mpdocker student-list]$ sudo sed -i 's/<api_ip_or_name:port>/10.0.0.10:5000/g' ./website/index.php
 [vagrant@mpdocker student-list]$ cat ./website/index.php
+```bash
 
-![alt text](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/3d9c67e5-7215-41f4-89b8-4af9056e6a6f)
+![alt text](![image](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/7cb8c526-5f85-43e7-92ea-4d79c379cbfb)
 
-```
+
 #
 ## Creating Bridge Network 
 [vagrant@mpdocker student-list]$ sudo docker network create --driver=bridge student-list-network
