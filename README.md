@@ -491,11 +491,8 @@ ihm_api   docker-php-entrypoint apac ...   Up      0.0.0.0:8080->80/tcp,:::8080-
 ``` bash
 ```
 4. Test of the application
-``` bash
+
 ![alt text](![image](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/35446697-ed79-4a1e-a166-021e9d871f7f)
-
-``` bash
-
 
 
 Run your docker-compose.yml
