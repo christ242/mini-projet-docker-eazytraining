@@ -279,7 +279,7 @@ We need to update the index file before carrying out the build of the image beca
 ````
 2. Showing the updatind Index 
 
-![alt text](![image](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/231dc42f-07a3-48fe-9ef8-447449a977b4)
+![alt text]([image](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/231dc42f-07a3-48fe-9ef8-447449a977b4)
 
 
 ##
