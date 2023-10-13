@@ -446,60 +446,36 @@ cd ..
 sudo vi docker-compose.yml
 ```
 ```bash
-version: '3.3'
+version: '3.1'
 services:
-    api:
-        image: student-list-api:latest
-        container_name: api-test
-        network_mode: student-list
-        ports:
-            - '8500:5000'
-        volumes:
-            - '/home/vagrant/student-list/simple_api/student_age.json:/data/student_age.json' 
-    web:
-        container_name: web-api
-        image: php:apache
-        network_mode: student-list-network
-        ports:
-            - '8080:80'
-        environment:
-            USERNAME: "toto"
-            PASSWORD: "python"
-        volumes:
-            - '/website:/var/www/html/'
-        depends_on:
-            - 'api'
+  api:
+    container_name: api
+    image: student-list-api:v1.0
+    restart: always
+    # ports:
+    #   - 8500:5000
+    volumes:
+      - /home/vagrant/student-list/student_age.json:/data/student_age.json  
+    networks:
+      - student-list-network
 
-    registry:
-        ports:
-            - '5000:5000'
-        container_name: registry
-        image: 'registry:2'
-        network_mode: student-list-network
-
-    registry-ui:
-        depends_on:
-            - 'registry'
-        image: joxit/docker-registry-ui:main
-        restart: always
-        ports:
-            - '80:80'
-        network_mode: student-list-network
-        environment:
-            - SINGLE_REGISTRY=true
-            - REGISTRY_TITLE="BAGAMBOULA CHRIST"
-            - DELETE_IMAGES=true
-            - SHOW_CONTENT_DIGEST=true
-            - NGINX_PROXY_PASS_URL=http://registry-server:5000
-            - SHOW_CATALOG_NB_TAGS=true
-            - CATALOG_MIN_BRANCHES=1
-            - CATALOG_MAX_BRANCHES=1
-            - TAGLIST_PAGE_SIZE=100
-            - REGISTRY_SECURED=false
-            - CATALOG_ELEMENTS_LIMIT=1000
-        container_name: registry-ui
+  ihm_api:
+    container_name: ihm_api
+    image: php:apache
+    restart: always
+    depends_on:
+      - api
+    environment:
+      USERNAME: "toto"
+      PASSWORD: "python"
+    volumes:
+      - ./website:/var/www/html
+    ports:
+      - 8080:80
+    networks:
+      - student-list-network
 networks:
-    student-list-network:
+  student-list-network
 2. Run docker-compose
 ```bash
 sudo docker-compose up -d
@@ -508,13 +484,15 @@ sudo docker-compose up -d
 3. Verify the resources created
 ``` bash
 vagrant@mpdocker student-list]$ sudo docker ps
-CONTAINER ID   IMAGE                           COMMAND                  CREATED         STATUS         PORTS                                       NAMES   
-27c8c79153b8   joxit/docker-registry-ui:main   "/docker-entrypoint.…"   5 minutes ago   Up 4 seconds   0.0.0.0:80->80/tcp, :::80->80/tcp           registry-ui
-ddd28dfb002a   php:apache                      "docker-php-entrypoi…"   5 minutes ago   Up 4 seconds   0.0.0.0:8080->80/tcp, :::8080->80/tcp       web-api 
-209c046db6cf   student-list-api:v1.0           "python ./student_ag…"   5 minutes ago   Up 5 seconds   0.0.0.0:8500->5000/tcp, :::8500->5000/tcp   api-test1a33b4090b6b   registry:2                      "/entrypoint.sh /etc…"   5 minutes ago   Up 5 seconds   0.0.0.0:5000->5000/tcp, :::5000->5000/tcp   registry
+[vagrant@mpdocker student-list]$ sudo docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                       NAMES   
+497d0f1a26a5   php:apache              "docker-php-entrypoi…"   17 seconds ago   Up 16 seconds   0.0.0.0:8080->80/tcp, :::8080->80/tcp       web-api 
+946c8891b06b   student-list-api:v1.0   "python ./student_ag…"   18 seconds ago   Up 16 seconds   0.0.0.0:8500->5000/tcp, :::8500->5000/tcp   api-test
 ``` bash
 ```
-
+4. Test of the application
+``` bash
+``` bash
 
 
 
