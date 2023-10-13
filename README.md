@@ -475,7 +475,7 @@ services:
     networks:
       - student-list-network
 networks:
-  student-list-network
+  student-list-network:
 2. Run docker-compose
 ```bash
 sudo docker-compose up -d
