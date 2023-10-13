@@ -451,11 +451,10 @@ services:
   api:
     container_name: api
     image: student-list-api:v1.0
-    restart: always
-    # ports:
-    #   - 8500:5000
+#    ports:
+#      - 8500:5000
     volumes:
-      - /home/vagrant/student-list/student_age.json:/data/student_age.json  
+      - /home/vagrant/student-list/simple_api/student_age.json:/data/student_age.json
     networks:
       - student-list-network
 
@@ -469,7 +468,7 @@ services:
       USERNAME: "toto"
       PASSWORD: "python"
     volumes:
-      - ./website:/var/www/html
+      - /home/vagrant/student-list/website:/var/www/html
     ports:
       - 8080:80
     networks:
@@ -484,14 +483,17 @@ sudo docker-compose up -d
 3. Verify the resources created
 ``` bash
 vagrant@mpdocker student-list]$ sudo docker ps
-[vagrant@mpdocker student-list]$ sudo docker ps
-CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                       NAMES   
-497d0f1a26a5   php:apache              "docker-php-entrypoi…"   17 seconds ago   Up 16 seconds   0.0.0.0:8080->80/tcp, :::8080->80/tcp       web-api 
-946c8891b06b   student-list-api:v1.0   "python ./student_ag…"   18 seconds ago   Up 16 seconds   0.0.0.0:8500->5000/tcp, :::8500->5000/tcp   api-test
+[vagrant@mpdocker student-list]$ sudo docker-compose ps
+ Name                Command               State                  Ports
+---------------------------------------------------------------------------------------
+api       python ./student_age.py          Up      5000/tcp
+ihm_api   docker-php-entrypoint apac ...   Up      0.0.0.0:8080->80/tcp,:::8080->80/tcp
 ``` bash
 ```
 4. Test of the application
 ``` bash
+![alt text](![image](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/35446697-ed79-4a1e-a166-021e9d871f7f)
+
 ``` bash
 
 
