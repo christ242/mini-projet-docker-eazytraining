@@ -556,8 +556,66 @@ f1d420c2af1a: Waiting
 6. Adding the webinterface
 We need to deploy a container in order to get a webinterface allowing us to get a complete view of the images pushed to the private registry . Therefore , we are going to use the infra as code .
 ```bash
+[vagrant@mpdocker student-list]$ cat docker-compose.yml 
+version: '3.1'
+services:
+  api:
+    container_name: api
+    image: student-list-api:v1.0
+#    ports:
+#      - 8500:5000
+    volumes:
+      - /home/vagrant/student-list/simple_api/student_age.json:/data/student_age.json  
+    networks:
+      - student-list-network
 
-[vagrant@mpdocker student-list]$   
+  ihm_api:
+    container_name: ihm_api
+    image: php:apache
+    restart: always
+    depends_on:
+      - api
+    environment:
+      USERNAME: "toto"
+      PASSWORD: "python"
+    volumes:
+      - /home/vagrant/student-list/website:/var/www/html
+    ports:
+      - 8080:80
+    networks:
+      - student-list-network
+
+  registry:
+        ports:
+            - '5000:5000'
+        container_name: registry
+        image: 'registry:2'
+        network_mode: student-list-network
+
+    registry-ui:
+        depends_on:
+            - 'registry'
+        image: joxit/docker-registry-ui:main
+        restart: always
+        ports:
+            - '80:80'
+        network_mode: student-list-network
+        environment:
+            - SINGLE_REGISTRY=true
+            - REGISTRY_TITLE="BAGAMBOULA CHRIST"
+            - DELETE_IMAGES=true
+            - SHOW_CONTENT_DIGEST=true
+            - NGINX_PROXY_PASS_URL=http://registry-server:5000
+            - SHOW_CATALOG_NB_TAGS=true
+            - CATALOG_MIN_BRANCHES=1
+            - CATALOG_MAX_BRANCHES=1
+            - TAGLIST_PAGE_SIZE=100
+            - REGISTRY_SECURED=false
+            - CATALOG_ELEMENTS_LIMIT=1000
+        container_name: registry-ui
+networks:
+  student-list-network:
+  
 ```
 
 
