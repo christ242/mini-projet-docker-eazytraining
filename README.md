@@ -350,14 +350,19 @@ student-list-api   latest    b70c5c94bc46   31 seconds ago   1.14GB
 ```
 ## Running Image 
 1. Setting up the apicontainer
+```bash
 [vagrant@mpdocker simple_api]$ sudo docker container run -d -it -p 5000:5000 --name student-list-container -v /home/vagrant/student-list/simple_api/student_age.json:/data/student_age.json student-list-api
 bef2cb5cbe2b20d34d31cd2282f5a3f63892120b0f401318e8fc98e88301e8f7
-2. Checking out the container 
+```bash
+3. Checking out the container
+```bash
+
 [vagrant@mpdocker simple_api]$ sudo docker ps
 CONTAINER ID   IMAGE              COMMAND                  CREATED         STATUS         PORTS                                       NAMES
 bef2cb5cbe2b   student-list-api   "python ./student_ag…"   6 seconds ago   Up 4 seconds   0.0.0.0:5000->5000/tcp, :::5000->5000/tcp   student-list-container
-3. API Test
-
+```bash
+4. API Test
+```bash
 [vagrant@mpdocker simple_api]$ curl -u toto:python -X GET http://10.0.0.10:5000/pozos/api/v1.0/get_student_ages
 {
   "student_ages": {
@@ -365,8 +370,11 @@ bef2cb5cbe2b   student-list-api   "python ./student_ag…"   6 seconds ago   Up 
     "bob": "13"    
   }
 }
+```bash
+````
 
 ##  Tagging the image's application
+```bash
 [vagrant@mpdocker simple_api]$ sudo docker images
 REPOSITORY         TAG       IMAGE ID       CREATED          SIZE  
 student-list-api   latest    b70c5c94bc46   59 minutes ago   1.14GB 
@@ -375,8 +383,11 @@ student-list-api   latest    b70c5c94bc46   59 minutes ago   1.14GB
 REPOSITORY                  TAG       IMAGE ID       CREATED             SIZE  
 kitepoye/student-list-api   v1.0      b70c5c94bc46   About an hour ago   1.14GB
 student-list-api            latest    b70c5c94bc46   About an hour ago   1.14GB
+```bash
+````
 
 ## Sending the image's application to dockerhub
+```bash
 [vagrant@mpdocker simple_api]$ sudo docker login
 Log in with your Docker ID or email address to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com/ to create one.
 You can log in with your password or a Personal Access Token (PAT). Using a limited-scope PAT grants better security and is required for organizations using SSO. Learn more at https://docs.docker.com/go/access-tokens/
@@ -403,8 +414,9 @@ a3c1026c6bcc: Mounted from library/python
 f1d420c2af1a: Mounted from library/python
 461719022993: Mounted from library/python
 v1.0: digest: sha256:e2ee9b930beb19089f39bb6f2b698b293af7f0154ba375f19a0f0c9d93be485d size: 2852
-[vagrant@mpdocker simple_api]$ 
 
+```bash
+````
 
 ### Infrastructure As Code (5 points)
 
