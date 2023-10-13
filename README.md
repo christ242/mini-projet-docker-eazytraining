@@ -341,6 +341,8 @@ sudo docker build -t student-list-api:v1.0 .
 sudo docker images
 ```
 ```bash
+```
+```bash
 REPOSITORY         TAG           IMAGE ID       CREATED         SIZE
 [vagrant@mpdocker simple_api]$ sudo docker images
 REPOSITORY         TAG       IMAGE ID       CREATED          SIZE  
