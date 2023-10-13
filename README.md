@@ -446,7 +446,68 @@ cd ..
 sudo vi docker-compose.yml
 ```
 ```bash
+version: '3.3'
+services:
+    api:
+        image: student-list-api:latest
+        container_name: api-test
+        network_mode: student-list
+        ports:
+            - '8500:5000'
+        volumes:
+            - '/home/vagrant/student-list/simple_api/student_age.json:/data/student_age.json' 
+    web:
+        container_name: web-api
+        image: php:apache
+        network_mode: student-list-network
+        ports:
+            - '8080:80'
+        environment:
+            USERNAME: "toto"
+            PASSWORD: "python"
+        volumes:
+            - '/website:/var/www/html/'
+        depends_on:
+            - 'student-list-api'
 
+    registry:
+        ports:
+            - '5000:5000'
+        container_name: registry
+        image: 'registry:2'
+        network_mode: student-list-network
+
+    registry-ui:
+        depends_on:
+            - 'registry'
+        image: joxit/docker-registry-ui:main
+        restart: always
+        ports:
+            - '80:80'
+        network_mode: student-list-network
+        environment:
+            - SINGLE_REGISTRY=true
+            - REGISTRY_TITLE="BAGAMBOULA CHRIST"
+            - DELETE_IMAGES=true
+            - SHOW_CONTENT_DIGEST=true
+            - NGINX_PROXY_PASS_URL=http://registry-server:5000
+            - SHOW_CATALOG_NB_TAGS=true
+            - CATALOG_MIN_BRANCHES=1
+            - CATALOG_MAX_BRANCHES=1
+            - TAGLIST_PAGE_SIZE=100
+            - REGISTRY_SECURED=false
+            - CATALOG_ELEMENTS_LIMIT=1000
+        container_name: registry-ui
+networks:
+    student-list-network:
+2. Run docker-compose
+```bash
+sudo docker-compose up -d
+```
+```bash
+Creating student-list_api_1 ... done
+Creating student-list_web_1 ... done
+```
 
 
 
