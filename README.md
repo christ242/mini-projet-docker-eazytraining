@@ -500,32 +500,64 @@ ihm_api   docker-php-entrypoint apac ...   Up      0.0.0.0:8080->80/tcp,:::8080-
 ![alt text](![image](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/35446697-ed79-4a1e-a166-021e9d871f7f)
 
 
-##  Private Docker Registry (4 points)
-
-POZOS need you to deploy a private registry and store the built images
-
-So you need to deploy :
+##  Private Docker Registry 
+Now , we are going to deploy a private registrt and store the built images .
+So we need to deploy :
 
 - a docker [registry](https://docs.docker.com/registry/ "registry")
 - a web [interface](https://hub.docker.com/r/joxit/docker-registry-ui/ "interface") to see the pushed image as a container
+We will deploy and send all the images on our private registry , because ther'
 
-Or you can use [Portus](http://port.us.org/ "Portus") to run both
+1. Deploying the private  registry container
+```bash
+[vagrant@mpdocker student-list]$ sudo docker run -d -p 5000:5000 --network=student-list-network --name=registry registry:2
+```
+2. Checking the container existence
+```bash
+vagrant@mpdocker student-list]$ sudo docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                       NAMES   
+36d056749e97   registry:2              "/entrypoint.sh /etc…"   40 seconds ago   Up 39 seconds   0.0.0.0:5000->5000/tcp, :::5000->5000/tcp   registry
+```
+3. Tagging the api image built before sending it to the private registry
+```bash
+[vagrant@mpdocker student-list]$ sudo docker tag student-list-api:v1.0 localhost:5000/student-list-api:latest
+[vagrant@mpdocker student-list]$ sudo docker images
+REPOSITORY                        TAG       IMAGE ID       CREATED        SIZE  
+student-list-api                  v1.0      883d4fff5e23   5 hours ago    1.14GB
+localhost:5000/student-list-api   latest    883d4fff5e23   5 hours ago    1.14GB
+php                               apache    c180fae8ecd7   33 hours ago   503MB 
+registry                          2         0ae1560ca86f   10 days ago    25.4MB
+```
+![alt text](![image](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/e09bd777-b3a3-4146-89e1-d6917d99433b)
 
-Don't forget to push your image on your private registry and show them in your delivery.
+4. Pushing the tag image to the private registry
+```bash
+[vagrant@mpdocker student-list]$ sudo docker push localhost:5000/student-list-api:latest
+The push refers to repository [localhost:5000/student-list-api]
+e18759cf00e6: Pushed
+0d2976687991: Pushed
+fdd4c352e972: Pushing [============>                                      ]  58.22MB/231.1MB
+e571d2d3c73c: Pushing [==================================================>]  15.28MB
+da7b0a80a4f2: Pushed
+ceee8816bb96: Pushing [=================================>                 ]  40.91MB/60.51MB
+47458fb45d99: Pushing [=======================================>           ]  13.64MB/17.08MB
+46829331b1e4: Pushing [>                                                  ]  1.648MB/509.8MB
+d35c5bda4793: Waiting
+a3c1026c6bcc: Waiting
+f1d420c2af1a: Waiting
+461719022993: Waiting
+```
+5. Retrieving the image pushed to the private registry
+```bash
+[vagrant@mpdocker student-list]$ curl http://localhost:5000/v2/_catalog
+{"repositories":["student-list-api"]}
+[vagrant@mpdocker student-list]$   
+```
+6. Adding the webinterface
+We need to deploy a container in order to get a webinterface allowing us to get a complete view of the images pushed to the private registry . Therefore , we are going to use the infra as code .
+```bash
 
-## Delivery (4 points)
+[vagrant@mpdocker student-list]$   
+```
 
-Your delivery must be zip named firstname.zip (replace firstname by your own) that contain:
 
-- A doc or PDF file with your screenshots and explanations.
-- Configuration files used to realize the graded exercise (docker-compose.yml and Dockerfile).
-
-Your delivery will be evaluated on:
-
-- Explanations quality
-- Screenshots quality (relevance, visibility)
-- Presentation quality
-
-Send your delivery at ***eazytrainingfr@gmail.com*** and we will provide you the link of the solution.
-
-![good luck](https://user-images.githubusercontent.com/18481009/84582398-cad38100-adeb-11ea-95e3-2a9d4c0d5437.gif)
