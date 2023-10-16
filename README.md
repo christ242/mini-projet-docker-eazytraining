@@ -566,7 +566,7 @@ services:
 #    ports:
 #      - 8500:5000
     volumes:
-      - /home/vagrant/student-list/simple_api/student_age.json:/data/student_age.json  
+      - /home/vagrant/student-list/simple_api/student_age.json:/data/student_age.json
     networks:
       - student-list-network
 
@@ -580,42 +580,41 @@ services:
       USERNAME: "toto"
       PASSWORD: "python"
     volumes:
-      - /home/vagrant/student-list/website:/var/www/html
+      - ./website:/var/www/html
     ports:
       - 8080:80
     networks:
       - student-list-network
-
   registry:
     ports:
-      - '5000:5000'
+      - 5000:5000
     container_name: registry
-    image: 'registry:2'
-    network_mode: student-list-network
-
+    image: registry:2
+    restart: always
+    networks: 
+      - student-list-network
   registry-ui:
     depends_on:
-      - 'registry'
+      - registry
     image: joxit/docker-registry-ui:main
     restart: always
     ports:
-      - '80:80'
-    network_mode: student-list-network
+      - 80:80
+    networks: 
+      - student-list-network
     environment:
       - SINGLE_REGISTRY=true
-      - REGISTRY_TITLE="BAGAMBOULA CHRIST"
+      - REGISTRY_TITLE="kitepoye"
       - DELETE_IMAGES=true
       - SHOW_CONTENT_DIGEST=true
-      - NGINX_PROXY_PASS_URL=http://registry-server:5000
+      - NGINX_PROXY_PASS_URL=http://registry:5000
       - SHOW_CATALOG_NB_TAGS=true
-      - CATALOG_MIN_BRANCHES=1
-      - CATALOG_MAX_BRANCHES=1
-      - TAGLIST_PAGE_SIZE=100
+      - TAGLIST_PAGE_SIZE=10
       - REGISTRY_SECURED=false
-      - CATALOG_ELEMENTS_LIMIT=1000
+      - CATALOG_ELEMENTS_LIMIT=10   
     container_name: registry-ui
 networks:
-  student-list-network:
+  student-list-network: 
 ```
 7. Viewing all the containers
 ```bash
@@ -650,5 +649,6 @@ f1d420c2af1a: Waiting
 ````
 10. Watching the image pushed on the private registry
     
-   
+![alt text](![image](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/e71a6ce8-79a8-4add-9a8c-e79a799a6f54)
+
 
