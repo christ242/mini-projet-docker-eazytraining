@@ -648,7 +648,8 @@ f1d420c2af1a: Waiting
 461719022993: Waiting
 ````
 10. Watching the image pushed on the private registry
-    
-![alt text](![image](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/e71a6ce8-79a8-4add-9a8c-e79a799a6f54)
+    Now  we are going to see the image pushed on the web UI.
+![alt text](![image](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/16fd07d7-6813-4754-8dfd-a95457941fde)
+
 
 
