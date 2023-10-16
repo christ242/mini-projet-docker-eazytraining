@@ -556,7 +556,8 @@ f1d420c2af1a: Waiting
 6. Adding the webinterface
 We need to deploy a container in order to get a webinterface allowing us to get a complete view of the images pushed to the private registry . Therefore , we are going to use the infra as code .
 ```bash
-[vagrant@mpdocker student-list]$ cat docker-compose.yml 
+
+  [vagrant@mpdocker student-list]$ cat docker-compose.yml 
 version: '3.1'
 services:
   api:
@@ -586,36 +587,68 @@ services:
       - student-list-network
 
   registry:
-        ports:
-            - '5000:5000'
-        container_name: registry
-        image: 'registry:2'
-        network_mode: student-list-network
+    ports:
+      - '5000:5000'
+    container_name: registry
+    image: 'registry:2'
+    network_mode: student-list-network
 
-    registry-ui:
-        depends_on:
-            - 'registry'
-        image: joxit/docker-registry-ui:main
-        restart: always
-        ports:
-            - '80:80'
-        network_mode: student-list-network
-        environment:
-            - SINGLE_REGISTRY=true
-            - REGISTRY_TITLE="BAGAMBOULA CHRIST"
-            - DELETE_IMAGES=true
-            - SHOW_CONTENT_DIGEST=true
-            - NGINX_PROXY_PASS_URL=http://registry-server:5000
-            - SHOW_CATALOG_NB_TAGS=true
-            - CATALOG_MIN_BRANCHES=1
-            - CATALOG_MAX_BRANCHES=1
-            - TAGLIST_PAGE_SIZE=100
-            - REGISTRY_SECURED=false
-            - CATALOG_ELEMENTS_LIMIT=1000
-        container_name: registry-ui
+  registry-ui:
+    depends_on:
+      - 'registry'
+    image: joxit/docker-registry-ui:main
+    restart: always
+    ports:
+      - '80:80'
+    network_mode: student-list-network
+    environment:
+      - SINGLE_REGISTRY=true
+      - REGISTRY_TITLE="BAGAMBOULA CHRIST"
+      - DELETE_IMAGES=true
+      - SHOW_CONTENT_DIGEST=true
+      - NGINX_PROXY_PASS_URL=http://registry-server:5000
+      - SHOW_CATALOG_NB_TAGS=true
+      - CATALOG_MIN_BRANCHES=1
+      - CATALOG_MAX_BRANCHES=1
+      - TAGLIST_PAGE_SIZE=100
+      - REGISTRY_SECURED=false
+      - CATALOG_ELEMENTS_LIMIT=1000
+    container_name: registry-ui
 networks:
   student-list-network:
-  
 ```
+7. Viewing all the containers
+```bash
+vagrant@mpdocker student-list]$ sudo docker-compose ps
+   Name                  Command               State                    Ports
+-----------------------------------------------------------------------------------------------
+api           python ./student_age.py          Up      5000/tcp
+ihm_api       docker-php-entrypoint apac ...   Up      0.0.0.0:8080->80/tcp,:::8080->80/tcp    
+registry      /entrypoint.sh /etc/docker ...   Up      0.0.0.0:5000->5000/tcp,:::5000->5000/tcp
+registry-ui   /docker-entrypoint.sh ngin ...   Up      0.0.0.0:80->80/tcp,:::80->80/tcp
+````
+8. Watching the private registry interface
+We can watch the registry with the ip address and port 80
+![alt text](![image](https://github.com/christ242/mini-projet-docker-eazytraining/assets/60726494/7c93cd0d-2d02-4496-95e8-77f2cdaae0c3)
 
+9. Pushing an image to the private registry
+```bash
+[vagrant@mpdocker student-list]$ sudo docker push localhost:5000/student-list-api:latest
+The push refers to repository [localhost:5000/student-list-api]
+e18759cf00e6: Pushed
+0d2976687991: Pushing [===========================================>       ]  8.434MB/9.644MB
+fdd4c352e972: Pushing [===>                                               ]  18.11MB/231.1MB
+e571d2d3c73c: Pushing [==============================>                    ]   8.91MB/14.47MB
+da7b0a80a4f2: Pushed
+ceee8816bb96: Pushing [==============================>                    ]  36.66MB/60.51MB
+47458fb45d99: Pushing [=====>                                             ]  1.845MB/17.08MB
+46829331b1e4: Waiting
+d35c5bda4793: Waiting
+a3c1026c6bcc: Waiting
+f1d420c2af1a: Waiting
+461719022993: Waiting
+````
+10. Watching the image pushed on the private registry
+    
+   
 
